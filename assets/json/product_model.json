@@ -1,0 +1,48 @@
+{
+  "quantity": 55,
+  "images": [
+    "https://firebasestorage.googleapis.com/v0/b/eshop-86482.appspot.com/o/products%2FsikY630IWX41iwH6viMK__1.jpg?alt=media&token=a0e25cbc-92f3-4f2b-a8d1-cca262550b8d",
+    "https://firebasestorage.googleapis.com/v0/b/eshop-86482.appspot.com/o/products%2FsikY630IWX41iwH6viMK__2.jpg?alt=media&token=c343454d-f3b8-45aa-9518-8c9a814d0f8f",
+    "https://firebasestorage.googleapis.com/v0/b/eshop-86482.appspot.com/o/products%2FsikY630IWX41iwH6viMK__3.jpg?alt=media&token=497985ff-1459-4b1b-9230-9327930e650a",
+    "https://firebasestorage.googleapis.com/v0/b/eshop-86482.appspot.com/o/products%2FsikY630IWX41iwH6viMK__4.jpg?alt=media&token=8c1e7816-182b-4d92-ab88-077320cea299",
+    "https://firebasestorage.googleapis.com/v0/b/eshop-86482.appspot.com/o/products%2FsikY630IWX41iwH6viMK__5.jpg?alt=media&token=2fb4494f-035a-44fe-a87c-4afb6068dc19"
+  ],
+  "category": "Scarf",
+  "colors": [
+    "Blue",
+    "Navey Blue",
+    "Black",
+    "Print",
+    "White"
+  ],
+  "created_at": {
+    "__datatype__": "timestamp",
+    "value": {
+      "_seconds": 1626717600,
+      "_nanoseconds": 0
+    }
+  },
+  "sizes": [
+    "24",
+    "26",
+    "28",
+    "30"
+  ],
+  "measurement": "",
+  "name": "Shawl Cashmere",
+  "discount": 5,
+  "last_update": {
+    "__datatype__": "timestamp",
+    "value": {
+      "_seconds": 1626717600,
+      "_nanoseconds": 0
+    }
+  },
+  "brand": "Shanghai",
+  "old_price": 12,
+  "new_price": 10,
+  "id": "sikY630IWX41iwH6viMK",
+  "price_type": 1,
+  "gender": 2,
+  "description": "Winter Scarf for Women Brand Designer Shawl Cashmere Plaid Scarves Blanket Wholesale"
+}

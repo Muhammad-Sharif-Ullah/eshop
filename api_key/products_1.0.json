@@ -1,0 +1,465 @@
+{
+  "__collections__": {
+    "products": {
+      "6067Ez9StdEJfQ3GN0qw": {
+        "description": "Classic look with this solid black color terry rayon fabric party wear jodhpuri blazer for mens. It has stand collar, full sleeves, welt pocket with pocket, full buttoned closure.",
+        "measurement": "",
+        "colors": [
+          "Black"
+        ],
+        "created_at": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626717600,
+            "_nanoseconds": 0
+          }
+        },
+        "category": "Blazer",
+        "price_type": 1,
+        "images": [
+          "products/6067Ez9StdEJfQ3GN0qw__1.jpg",
+          "products/6067Ez9StdEJfQ3GN0qw__2.jpg",
+          "products/6067Ez9StdEJfQ3GN0qw__3.jpg",
+          "products/6067Ez9StdEJfQ3GN0qw__4.jpg"
+        ],
+        "quantity": 2,
+        "brand": "Terry Rayon",
+        "rating": {
+          " M92jE0RAzdhtsOnk5lX22oMK0Ia2": 5,
+          " 9uQbs1QPk2OexIcjD7d4pbQ6fNz1": 4
+        },
+        "new_price": "52",
+        "last_update": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626717600,
+            "_nanoseconds": 0
+          }
+        },
+        "gender": 1,
+        "id": "6067Ez9StdEJfQ3GN0qw",
+        "sizes": [
+          "38",
+          "40",
+          "46",
+          "48"
+        ],
+        "discount": 10,
+        "old_price": "62",
+        "name": "Jodhpuri Blazer",
+        "__collections__": {}
+      },
+      "9hEMmLIKKmccAUq6aY5E": {
+        "rating": {
+          "9uQbs1QPk2OexIcjD7d4pbQ6fNz1": 5,
+          " M92jE0RAzdhtsOnk5lX22oMK0Ia2": 2
+        },
+        "gender": 1,
+        "new_price": "0",
+        "brand": "Angel Jackets",
+        "category": "Coat",
+        "description": "Looking for an ideal look for both business and cocktail events this men light grey sports coat is best. And you can add it to your wardrobe for all the seasons. Its features include notch lapel two side pockets and one front. ",
+        "sizes": [
+          "32",
+          "34",
+          "42",
+          "48"
+        ],
+        "images": [
+          "products/9hEMmLIKKmccAUq6aY5E__1.jpg",
+          "products/9hEMmLIKKmccAUq6aY5E__2.jpg",
+          "products/9hEMmLIKKmccAUq6aY5E__3.jpg",
+          "products/9hEMmLIKKmccAUq6aY5E__4.jpg"
+        ],
+        "last_update": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626717600,
+            "_nanoseconds": 0
+          }
+        },
+        "created_at": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626717600,
+            "_nanoseconds": 0
+          }
+        },
+        "quantity": 3,
+        "old_price": "79.88",
+        "measurement": "",
+        "name": "Calderon Sports",
+        "price_type": 1,
+        "discount": 0,
+        "id": "9hEMmLIKKmccAUq6aY5E",
+        "colors": [
+          "Light Grey",
+          "Grey"
+        ],
+        "__collections__": {}
+      },
+      "M8CzHFApVlVEvgtHK1UC": {
+        "old_price": "39.99",
+        "discount": 0,
+        "sizes": [
+          "34",
+          "56",
+          "36"
+        ],
+        "id": "M8CzHFApVlVEvgtHK1UC",
+        "description": "Guinea Trench Coat - Ladies from A Hume UK Franklin Trench Coat - Gingerbread Tall Double Breasted Trench Coat Black Wool Marlborough Trench Coat GAN",
+        "quantity": 10,
+        "price_type": 1,
+        "gender": 2,
+        "colors": [
+          "Navy Blue",
+          "Chamois",
+          "Cornflower"
+        ],
+        "category": "Coat",
+        "rating": {
+          "M92jE0RAzdhtsOnk5lX22oMK0Ia2": 4,
+          "9uQbs1QPk2OexIcjD7d4pbQ6fNz1": 1
+        },
+        "measurement": "",
+        "new_price": "0",
+        "last_update": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626717600,
+            "_nanoseconds": 0
+          }
+        },
+        "images": [
+          "products/M8CzHFApVlVEvgtHK1UC__1.jpg",
+          "products/M8CzHFApVlVEvgtHK1UC__2.jpg",
+          "products/M8CzHFApVlVEvgtHK1UC__5.jpg",
+          "products/UHEoAGSqe189PqlZtA4R__1.png",
+          "products/UHEoAGSqe189PqlZtA4R__2.png",
+          "products/UHEoAGSqe189PqlZtA4R__3.png"
+        ],
+        "created_at": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626717600,
+            "_nanoseconds": 0
+          }
+        },
+        "name": "Trench coat uk",
+        "brand": "Trench coat uk",
+        "__collections__": {}
+      },
+      "UHEoAGSqe189PqlZtA4R": {
+        "last_update": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626717600,
+            "_nanoseconds": 0
+          }
+        },
+        "price_type": 1,
+        "id": "UHEoAGSqe189PqlZtA4R",
+        "colors": [
+          "Browns"
+        ],
+        "created_at": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626717600,
+            "_nanoseconds": 0
+          }
+        },
+        "quantity": 3,
+        "category": "Hat",
+        "discount": 20,
+        "brand": "Sunday Afternoons",
+        "description": "Traveling far, but don't want to leave your sense of fashion behind? The Sunday Afternoons Havana hat has a 2.5 in. fedora brim that shades your face from the sun on adventures at home and abroad.",
+        "measurement": "",
+        "sizes": [
+          "M",
+          "L"
+        ],
+        "images": [
+          "products/UHEoAGSqe189PqlZtA4R__1.png",
+          "products/UHEoAGSqe189PqlZtA4R__2.png",
+          "products/UHEoAGSqe189PqlZtA4R__3.png"
+        ],
+        "name": "Havana Hat",
+        "new_price": "23.63",
+        "old_price": "34",
+        "rating": {
+          "9uQbs1QPk2OexIcjD7d4pbQ6fNz1": 3,
+          "M92jE0RAzdhtsOnk5lX22oMK0Ia2": 4
+        },
+        "gender": 0,
+        "__collections__": {}
+      },
+      "V4LCjpdn805dt8X2sxTV": {
+        "description": "New Style Fashion cashmere Winter tassel Colorful Plaid Warm Acrylic Men scarf",
+        "measurement": "",
+        "sizes": [
+          "35x160cm"
+        ],
+        "discount": 10,
+        "created_at": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626717600,
+            "_nanoseconds": 0
+          }
+        },
+        "category": "Scarf",
+        "quantity": 23,
+        "images": [
+          "products/V4LCjpdn805dt8X2sxTV__1.jpg",
+          "products/V4LCjpdn805dt8X2sxTV__2.jpg",
+          "products/V4LCjpdn805dt8X2sxTV__3.jpg",
+          "products/V4LCjpdn805dt8X2sxTV__4.jpg"
+        ],
+        "id": "V4LCjpdn805dt8X2sxTV",
+        "rating": {
+          "M92jE0RAzdhtsOnk5lX22oMK0Ia2": 2,
+          "9uQbs1QPk2OexIcjD7d4pbQ6fNz1": 3
+        },
+        "new_price": "8",
+        "colors": [
+          "Black",
+          "White"
+        ],
+        "name": "Cashmere Winter tassel",
+        "brand": "Warm Acrylic",
+        "price_type": 1,
+        "last_update": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626717600,
+            "_nanoseconds": 0
+          }
+        },
+        "old_price": "10",
+        "gender": 1,
+        "__collections__": {}
+      },
+      "aYVtAUHfAzuk4L7JQqTy": {
+        "new_price": "0",
+        "measurement": "",
+        "name": "Panama Traforatto Belt",
+        "images": [
+          "products/aYVtAUHfAzuk4L7JQqTy__2.jpg",
+          "products/aYVtAUHfAzuk4L7JQqTy__3.jpg",
+          "products/aYVtAUHfAzuk4L7JQqTy__4.jpg"
+        ],
+        "old_price": "79.9",
+        "colors": [
+          "Grey White"
+        ],
+        "gender": 2,
+        "description": "Discover again the panama, the genuine, the one that is entirely woven by expert hands following an ancestral know-how. It is lightweight and ventilated, sublime and appropriate, but above all chic and relaxed at the same time. The inescapable hat of sunny seasons is this. To accompany your walks and other relaxed meetings.",
+        "category": "Hat",
+        "discount": 0,
+        "created_at": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626631200,
+            "_nanoseconds": 0
+          }
+        },
+        "price_type": 1,
+        "brand": "Classic Italy",
+        "last_update": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626631200,
+            "_nanoseconds": 0
+          }
+        },
+        "sizes": [
+          "Brim: 6.5 cm, Crown: 10 cm"
+        ],
+        "id": "aYVtAUHfAzuk4L7JQqTy",
+        "rating": {
+          "M92jE0RAzdhtsOnk5lX22oMK0Ia2": 3,
+          "9uQbs1QPk2OexIcjD7d4pbQ6fNz1": 4
+        },
+        "quantity": 4,
+        "__collections__": {}
+      },
+      "k7cUD5Qpq8uRseTQy4Zd": {
+        "descriptions": "Slim men cotton blazer, formal blazer for men, cotton blazer for boys. formal blazer pant, formal blazer man, formal blazer set for men, formal blazer suit for men,formal blazer suit for boys.",
+        "colors": [
+          "Black",
+          "Navy Blue",
+          "White",
+          "Crime"
+        ],
+        "id": "k7cUD5Qpq8uRseTQy4Zd",
+        "brand": "Sleeve",
+        "category": "Blazer",
+        "created_at": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1625594400,
+            "_nanoseconds": 0
+          }
+        },
+        "images": [
+          "products/k7cUD5Qpq8uRseTQy4Zd__1.jpeg",
+          "products/k7cUD5Qpq8uRseTQy4Zd__2.jpeg",
+          "products/k7cUD5Qpq8uRseTQy4Zd__3.jpeg"
+        ],
+        "old_price": "100",
+        "quantity": 3,
+        "gender": 1,
+        "measurement": "",
+        "sizes": [
+          "28",
+          "34",
+          "40",
+          "42",
+          "45"
+        ],
+        "name": "Printed Single Breasted Party Men",
+        "rating": {
+          "9uQbs1QPk2OexIcjD7d4pbQ6fNz1": 2
+        },
+        "last_update": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626717600,
+            "_nanoseconds": 0
+          }
+        },
+        "price_type": 1,
+        "discount": 19,
+        "new_price": "79",
+        "__collections__": {}
+      },
+      "ncMjxWM1F7CPtEPvblE2": {
+        "gender": 2,
+        "created_at": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626285600,
+            "_nanoseconds": 0
+          }
+        },
+        "brand": "Missguided",
+        "old_price": "100",
+        "last_update": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626717600,
+            "_nanoseconds": 0
+          }
+        },
+        "category": "Coat",
+        "price_type": 1,
+        "sizes": [
+          "32",
+          "34",
+          "36",
+          "38",
+          "40",
+          "42",
+          "44",
+          "46"
+        ],
+        "quantity": 4,
+        "colors": [
+          "Brown",
+          "Black"
+        ],
+        "id": "ncMjxWM1F7CPtEPvblE2",
+        "discount": 20,
+        "new_price": "80",
+        "images": [
+          "products/ncMjxWM1F7CPtEPvblE2__1.PNG",
+          "products/ncMjxWM1F7CPtEPvblE2__2.PNG",
+          "products/ncMjxWM1F7CPtEPvblE2__3.PNG",
+          "products/ncMjxWM1F7CPtEPvblE2__4.PNG"
+        ],
+        "description": "A formal style tie waist trench coat with double breasted front featuring button tab detail at the cuffs and shoulders, lining, pockets and split hem",
+        "rating": {
+          "M92jE0RAzdhtsOnk5lX22oMK0Ia2": 4
+        },
+        "measurement": "",
+        "name": "Camel Formal Trench Coat",
+        "__collections__": {}
+      },
+      "sikY630IWX41iwH6viMK": {
+        "last_update": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626717600,
+            "_nanoseconds": 0
+          }
+        },
+        "price_type": 1,
+        "quantity": 55,
+        "rating": {
+          "9uQbs1QPk2OexIcjD7d4pbQ6fNz1": 4
+        },
+        "created_at": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1626717600,
+            "_nanoseconds": 0
+          }
+        },
+        "images": [
+          "products/sikY630IWX41iwH6viMK__1.jpg",
+          "products/sikY630IWX41iwH6viMK__2.jpg",
+          "products/sikY630IWX41iwH6viMK__3.jpg",
+          "products/sikY630IWX41iwH6viMK__4.jpg",
+          "products/sikY630IWX41iwH6viMK__5.jpg"
+        ],
+        "brand": "Shanghai",
+        "colors": [
+          "Blue",
+          "Navey Blue",
+          "Black",
+          "Print",
+          "White"
+        ],
+        "category": "Scarf",
+        "new_price": "10",
+        "description": "Winter Scarf for Women Brand Designer Shawl Cashmere Plaid Scarves Blanket Wholesale",
+        "old_price": "12",
+        "name": "Shawl Cashmere",
+        "measurement": "",
+        "gender": 2,
+        "sizes": [
+          "24",
+          "26",
+          "28",
+          "30"
+        ],
+        "discount": 5,
+        "id": "sikY630IWX41iwH6viMK",
+        "__collections__": {}
+      }
+    },
+    "products_rating": {
+      " 6067Ez9StdEJfQ3GN0qw": {
+        "9uQbs1QPk2OexIcjD7d4pbQ6fNz1": "4",
+        "__collections__": {}
+      }
+    },
+    "users": {
+      "9uQbs1QPk2OexIcjD7d4pbQ6fNz1": {
+        "uid": " 9uQbs1QPk2OexIcjD7d4pbQ6fNz1",
+        "name": "Test User",
+        "avatar": "https://firebasestorage.googleapis.com/v0/b/eshop-86482.appspot.com/o/avatars%2F9uQbs1QPk2OexIcjD7d4pbQ6fNz1.jpg?alt=media&token=7ce02a1e-0c98-473f-af1b-7a26dfdb836a",
+        "email": "test@gmail.com",
+        "__collections__": {}
+      },
+      "M92jE0RAzdhtsOnk5lX22oMK0Ia2": {
+        "uid": "M92jE0RAzdhtsOnk5lX22oMK0Ia2",
+        "email": "ridoy@gmail.com",
+        "name": "Md. Fahad Hossain Ridoy",
+        "avatar": "https://firebasestorage.googleapis.com/v0/b/eshop-86482.appspot.com/o/avatars%2FM92jE0RAzdhtsOnk5lX22oMK0Ia2.jpg?alt=media&token=9ee1d4e1-5271-4403-843e-281828580dbb",
+        "__collections__": {}
+      }
+    }
+  }
+}
