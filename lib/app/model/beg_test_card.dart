@@ -1,13 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eshop/app/components/cached_network_widget.dart';
 import 'package:eshop/app/components/futureImageWidget.dart';
 import 'package:eshop/app/controllers/account_service_controller.dart';
 import 'package:eshop/app/firebase_repository/firebase_collection.dart';
 import 'package:eshop/app/model/beg_model.dart';
 import 'package:eshop/app/model/product_model.dart';
 import 'package:eshop/app/values/appColors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +25,7 @@ class BegCard extends StatefulWidget {
 class _BegCardState extends State<BegCard> {
   RxDouble price = 0.0.obs;
   RxInt quantity = 1.obs;
-  RxInt vQuantity = 1.obs;
+  RxInt vQuantity = 0.obs;
   RxDouble vPrice = 0.0.obs;
   late String prodId;
   final AccountServiceController controller = Get.find();
@@ -38,7 +35,7 @@ class _BegCardState extends State<BegCard> {
     prodId = widget.beg.id!;
     price.bindStream(priceAsStream(prodId));
     quantity.bindStream(quantityAsStream(prodId));
-    // vQuantity.value = quantity.value;
+    vQuantity.value = quantity.value;
 
     super.initState();
   }
@@ -55,35 +52,27 @@ class _BegCardState extends State<BegCard> {
       children: [
         Card(
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 5,
           color:
-              Get.isDarkMode ? AppColors.blackDark : AppColors.backgroundLight,
+          Get.isDarkMode ? AppColors.blackDark : AppColors.backgroundLight,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              // Expanded(
-              //   flex: 1,
-              //   child: FutureImageWidget(
-              //     height: 130,
-              //     url: widget.beg.image!,
-              //     width: 200,
-              //   ),
-              // ),
+              Expanded(
+                flex: 1,
+                child: FutureImageWidget(
+                  height: 130,
+                  url: widget.beg.image!,
+                  width: 200,
+                ),
+              ),
               // Image.asset(
               //   "assets/images/all_images/bag1.png",
               //   height: 130,
               //   fit: BoxFit.cover,
               //   filterQuality: FilterQuality.high,
               // )
-              Expanded(
-                flex: 1,
-                child: CachedNetworkWidget(
-                  width: 200,
-                  height: 130,
-                  url: widget.beg.image!,
-                ),
-              ),
               SizedBox(width: 10),
               Expanded(
                 flex: 2,
@@ -130,8 +119,7 @@ class _BegCardState extends State<BegCard> {
                                   vQuantity.value--;
                                   // controller.beg[widget.index].setPrice = "${vQuantity.value * price.value}";
                                   // controller.getTotalPrice();
-                                  controller.total.value -=
-                                      (price.value * vQuantity.value);
+                                  controller.total.value -= (price.value * vQuantity.value);
                                 }
                               },
                               child: Icon(Icons.remove, color: getColor()),
@@ -156,8 +144,7 @@ class _BegCardState extends State<BegCard> {
                                     vQuantity.value++;
                                     // controller.beg[widget.index].setPrice = "${vQuantity.value * price.value}";
                                     // controller.getTotalPrice();
-                                    controller.total.value +=
-                                        (price.value * (vQuantity.value - 1));
+                                    controller.total.value += (price.value * (vQuantity.value-1));
                                   } else
                                     Get.rawSnackbar(
                                         message: 'You have reached max item',
@@ -248,4 +235,3 @@ class _BegCardState extends State<BegCard> {
     });
   }
 }
-

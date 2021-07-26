@@ -1,9 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:eshop/app/firebase_repository/firebase_storage.dart';
+import 'package:eshop/app/components/bigSplashButton.dart';
+import 'package:eshop/app/components/cached_network_widget.dart';
+import 'package:eshop/app/controllers/account_service_controller.dart';
+import 'package:eshop/app/firebase_repository/firebase_collection.dart';
+import 'package:eshop/app/model/beg_model.dart';
 import 'package:eshop/app/model/product_model.dart';
 import 'package:eshop/app/modules/product_details/views/components/reviewSection.dart';
 import 'package:eshop/app/values/appColors.dart';
 import 'package:eshop/app/values/appConstant.dart';
+import 'package:eshop/app/values/nab_icon_icons.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -35,6 +40,44 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
           product.category!,
           style: TextStyle(color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
+        actions: [
+          SizedBox(
+            height: 40,
+            width: 40,
+            child: Stack(
+              fit: StackFit.loose,
+              alignment: Alignment.center,
+              children: [
+                Icon(NabIcon.bag_nofill),
+                Positioned(
+                  right: 0,
+                  top: 10,
+                  child: Container(
+                      height: 22,
+                      width: 22,
+                      padding: const EdgeInsets.all(2),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primary,
+                      ),
+                      child: FittedBox(
+                        fit: BoxFit.cover,
+                        child: GetX(
+                          builder: (AccountServiceController cnt){
+                            return Text(
+                              '${cnt.beg.length}',
+                              style: context.textTheme.caption,
+                            );
+                          },
+                        ),
+                      )),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: 24),
+        ],
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -57,14 +100,19 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                 ),
                 itemBuilder: (context, itemIndex, pageViewIndex) {
                   final String image = product.images![itemIndex];
-                  return FutureBuilder<String>(
-                    builder: (BuildContext context,
-                        AsyncSnapshot<dynamic> snapShot) {
-                      if (snapShot.hasData) return Image.network(snapShot.data);
-                      return Center(child: Text('Loading'));
-                    },
-                    future: FireBaseStorage.getDownloadLink(image),
+                  return CachedNetworkWidget(
+                    url: image,
+                    height: 184,
+                    width: 200,
                   );
+                  // return FutureBuilder<String>(
+                  //   builder: (BuildContext context,
+                  //       AsyncSnapshot<dynamic> snapShot) {
+                  //     if (snapShot.hasData) return Image.network(snapShot.data);
+                  //     return Center(child: Text('Loading'));
+                  //   },
+                  //   future: FireBaseStorage.getDownloadLink(image),
+                  // );
                 },
               ),
             ),
@@ -72,16 +120,32 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
               padding: const EdgeInsets.all(AppConstant.kPadding),
               child: Column(
                 children: [
-                  SelectSizeColor(colors: product.colors!, sizes: product.sizes!,),
+                  SelectSizeColor(
+                    colors: product.colors!,
+                    sizes: product.sizes!,
+                  ),
                   ProductInfo(
                     brand: product.brand!,
-                    price: double.parse(product.newPrice!),
+                    price: double.parse(product.oldPrice!),
                     prodType: product.category!,
                     rating: getRating(),
                     shortInfo:
                         "Short dress in soft cotton jersey with decorative buttons down the front and a wide, frill-trimmed",
                   ),
                 ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(AppConstant.kPadding),
+              child: BigSplashButton(
+                height: 48,
+                width: context.width,
+                text: "Add To Cart",
+                onPressed: () async {
+                  await FireBaseCollection.addToBeg(
+                      begMap: BegModel.productToBeg(controller.product,
+                          controller.color.value, controller.size.value, 1));
+                },
               ),
             ),
             ReviewSection(),

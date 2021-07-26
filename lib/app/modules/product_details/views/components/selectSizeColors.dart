@@ -1,5 +1,4 @@
 import 'package:eshop/app/firebase_repository/firebase_collection.dart';
-import 'package:eshop/app/model/beg_model.dart';
 import 'package:eshop/app/modules/product_details/controllers/product_details_controller.dart';
 import 'package:eshop/app/values/appColors.dart';
 import 'package:flutter/material.dart';
@@ -27,13 +26,8 @@ class SelectSizeColor extends GetWidget<ProductDetailsController> {
           buildBottomSheet(context, colors, "Select Colors", controller.color);
         }),
         FloatingActionButton(
-          onPressed: () async {
-            print(BegModel.productToBeg(controller.product,
-                        controller.color.value, controller.size.value, 1));
-            await FireBaseCollection.addToBeg(
-                begMap: BegModel.productToBeg(controller.product,
-                    controller.color.value, controller.size.value, 1),
-                prodId: controller.product.id!);
+          onPressed: (){
+            FireBaseCollection.addToMyFavorites(controller.product.id!);
           },
           heroTag: 'Favorites',
           child: Icon(Icons.favorite_border_sharp, color: Colors.grey),

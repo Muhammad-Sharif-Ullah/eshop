@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eshop/app/controllers/account_service_controller.dart';
 import 'package:eshop/app/firebase_repository/firebase_storage.dart';
 import 'package:eshop/app/model/product_model.dart';
 import 'package:eshop/app/modules/home/views/beg/views/beg_view.dart';
@@ -59,4 +58,10 @@ class HomeController extends GetxController {
 
 
   Future<String> getDownloadLink(String url) => FireBaseStorage.getDownloadLink(url);
+  // addToMyBeg(ProductModel product)async{
+  //
+  //   await FireBaseCollection.addToBeg(
+  //       begMap: BegModel.productToBeg(product,
+  //           product.colors![0], product.sizes![0], 1));
+  // }
 }

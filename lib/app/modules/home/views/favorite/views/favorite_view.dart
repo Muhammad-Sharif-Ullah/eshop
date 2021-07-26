@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eshop/app/controllers/account_service_controller.dart';
 import 'package:eshop/app/data/data.dart';
+import 'package:eshop/app/firebase_repository/firebase_collection.dart';
+import 'package:eshop/app/model/product_model.dart';
 import 'package:eshop/app/modules/home/controllers/home_controller.dart';
 import 'package:eshop/app/values/appColors.dart';
 import 'package:eshop/app/values/appConstant.dart';
@@ -9,7 +13,7 @@ import 'package:get/get.dart';
 import 'components/favoriteGridCard.dart';
 import 'components/favoriteListViewCard.dart';
 
-class FavoriteView extends GetView<HomeController> {
+class FavoriteView extends GetView<AccountServiceController> {
   @override
   @override
   Widget build(BuildContext context) {
@@ -115,16 +119,37 @@ class FavoriteView extends GetView<HomeController> {
     );
   }
 
-  GridView buildGridView() {
-    return GridView.builder(
-        physics: BouncingScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, mainAxisExtent: 300, mainAxisSpacing: 10),
-        itemCount: 20,
-        itemBuilder: (context, index) {
-          return FavoriteGridCard(product: saleProducts[0]);
+  Widget buildGridView() {
+    return FutureBuilder<List<ProductModel?>>(
+        future: controller.favoritesList(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+          else if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+          final List<ProductModel?> favoriteList = snapshot.data;
+
+          return GridView.builder(
+              physics: BouncingScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, mainAxisExtent: 300, mainAxisSpacing: 10),
+              itemCount: favoriteList.length,
+              itemBuilder: (context, index) {
+                return FavoriteGridCard(product: favoriteList[index]!);
+              });
         });
   }
+
+  // return GridView.builder(
+  // physics: BouncingScrollPhysics(),
+  // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+  // crossAxisCount: 2, mainAxisExtent: 300, mainAxisSpacing: 10),
+  // itemCount: 20,
+  // itemBuilder: (context, index) {
+  // return FavoriteGridCard(product: saleProducts[0]);
+  // });
 
   ListView _buildListView() {
     return ListView.builder(

@@ -124,7 +124,7 @@ class LoginView extends GetWidget<AuthenticationController> {
               if (_formKey.currentState!.validate()) {
                 print("Ok");
                 controller.login(_email.text.trim(), _password.text.trim());
-                Get.offAndToNamed(Routes.HOME);
+                Get.offAllNamed(Routes.HOME);
               }
             },
           ));

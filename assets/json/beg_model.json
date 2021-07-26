@@ -1,0 +1,19 @@
+{
+  "id": "product id",
+  "name" : "product name",
+  "brand" : "product brand",
+  "category" : "product category",
+  "measurement" : "measurement",
+  "image" : "image url",
+  "quantity": 1,
+  "discount": 20,
+  "color" : "Color",
+  "size" : "size",
+  "added_at" : {
+    "__datatype__": "timestamp",
+    "value": {
+      "_seconds": 1626717600,
+      "_nanoseconds": 0
+    }
+  }
+}

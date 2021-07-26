@@ -83,6 +83,9 @@ class FireBaseAuth {
     ///Save user Info into "users" collections
     FireBaseCollection.saveUserData(name, url, user);
 
+    // Creating Beg, Orders, Favorite, Address, Reviews Collection
+    FireBaseCollection.creatingUserCollection(user.uid);
+
   }
 
   /// Return True if use is loged in

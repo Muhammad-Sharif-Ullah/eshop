@@ -1,3 +1,5 @@
+import 'package:eshop/app/components/cached_network_widget.dart';
+import 'package:eshop/app/model/product_model.dart';
 import 'package:eshop/app/values/nab_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +13,7 @@ class FavoriteGridCard extends StatelessWidget {
     required this.product,
     Key? key,
   }) : super(key: key);
-  final ProductShortModel product;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -28,29 +30,21 @@ class FavoriteGridCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  height: 184,
-                  width: 200,
-                  child: Image.asset(
-                    product.image[0],
-                    fit: BoxFit.cover,
-                    filterQuality: FilterQuality.high,
-                  ),
-                ),
+                child: CachedNetworkWidget(width: 200, height: 184,url: product.images![0],),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0, top: 15, right: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ratingText(product.likedCount),
+                    ratingText(product.rating!.length),
                     Text('${product.brand}', overflow: TextOverflow.ellipsis,
                         style: context.textTheme.caption?.copyWith(
                             color: Colors.grey, letterSpacing: -.3)),
-                    Text('${product.prodType}', overflow: TextOverflow.ellipsis,
+                    Text('${product.category}', overflow: TextOverflow.ellipsis,
                         style: context.textTheme.subtitle1
                             ?.copyWith(letterSpacing: -.5)),
-                    priceText(context, product.oldPrice, product.newPrice),
+                    priceText(context, double.parse(product.oldPrice!), double.parse(product.newPrice!)),
                   ],
                 ),
               ),
@@ -72,11 +66,11 @@ class FavoriteGridCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
-                color:  product.upperBadge.isAlphabetOnly ? AppColors.blackDark : AppColors.primary ,
+                color:  product.brand!.isAlphabetOnly ? AppColors.blackDark : AppColors.primary ,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                product.upperBadge,
+                product.discount.toString(),
                 style: TextStyle(color: Colors.white, fontSize: 11),
               ),
             ),

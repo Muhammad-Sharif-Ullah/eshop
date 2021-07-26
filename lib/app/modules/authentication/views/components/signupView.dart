@@ -8,6 +8,7 @@ import 'package:eshop/app/modules/authentication/views/components/textInput.dart
 import 'package:eshop/app/routes/app_pages.dart';
 import 'package:eshop/app/values/appColors.dart';
 import 'package:eshop/app/values/appConstant.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -128,7 +129,10 @@ class SignUpView extends GetWidget<AuthenticationController> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            GoogleAuthButton(onPressed: () {}),
+                            GoogleAuthButton(onPressed: () {
+                              print('Check');
+                              print(FirebaseAuth.instance.currentUser);
+                            }),
                             SizedBox(width: 16),
                             FaceBookAuthButton(onPressed: () {}),
                           ],
@@ -161,7 +165,7 @@ class SignUpView extends GetWidget<AuthenticationController> {
           print("Ok");
           controller.signUp(
               _email.text.trim(), _password.text.trim(), _name.text.trim());
-          Get.offAndToNamed(Routes.HOME);
+          Get.offAllNamed(Routes.HOME);
         } else
           print('NOt Ok');
       },
