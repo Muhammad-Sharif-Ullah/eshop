@@ -160,14 +160,15 @@ class SignUpView extends GetWidget<AuthenticationController> {
       color: AppColors.primary,
       child: Text('Sing Up',
           style: context.textTheme.subtitle1?.copyWith(color: Colors.white)),
-      onPressed: () {
+      onPressed: () async{
         if (_formKey.currentState!.validate()) {
-          print("Ok");
-          controller.signUp(
+          final result = await controller.signUp(
               _email.text.trim(), _password.text.trim(), _name.text.trim());
-          Get.offAllNamed(Routes.HOME);
-        } else
-          print('NOt Ok');
+          if(result) {
+            Get.offAllNamed(Routes.HOME);
+            print("Successfully signup");
+          }
+        }
       },
     );
   }

@@ -34,9 +34,6 @@ class ProductCard extends GetWidget<HomeController> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // String url = (urls..shuffle()).first;
-
-                // FutureImageWidget(url: controller.products[index].images!.first, height: 184,width: 200),
                 CachedNetworkWidget(
                     url: controller.products[index].images!.first,
                     height: 184,
@@ -54,7 +51,6 @@ class ProductCard extends GetWidget<HomeController> {
                               color: Colors.grey, letterSpacing: -.3)),
                       Text(controller.products[index].name!,
 
-                          ///'${product.name}'
                           overflow: TextOverflow.ellipsis,
                           style: context.textTheme.subtitle1
                               ?.copyWith(letterSpacing: -.5)),

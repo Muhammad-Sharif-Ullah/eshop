@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eshop/app/firebase_repository/firebase_auth.dart';
-import 'package:eshop/app/model/beg_model.dart';
-import 'package:eshop/app/model/product_model.dart';
+import 'package:eshop/app/components/error_snackbar.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FireBaseCollection {
@@ -22,6 +19,13 @@ class FireBaseCollection {
       'email': user.email,
       'uid': user.uid,
       'avatar': url,
+    }).onError((FirebaseException error, stackTrace) {
+      print(error.code);
+      return errorSnackBar("Could not sing up", error.code.toString());
+    }).catchError((error){
+      print(error.code);
+      return errorSnackBar("Could not sing up", error.toString());
+
     });
   }
 

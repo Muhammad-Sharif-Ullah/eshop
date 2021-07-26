@@ -119,12 +119,13 @@ class LoginView extends GetWidget<AuthenticationController> {
             width: context.width,
             height: 48,
             text: "Login",
-            onPressed: () {
-              // print(_formKey.currentState!.validate());
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                print("Ok");
-                controller.login(_email.text.trim(), _password.text.trim());
-                Get.offAllNamed(Routes.HOME);
+                final result = await controller.login(_email.text.trim(), _password.text.trim());
+                if(result){
+                  Get.offAllNamed(Routes.HOME);
+                  print("Successfully login");
+                }
               }
             },
           ));

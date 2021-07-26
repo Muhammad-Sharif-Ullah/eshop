@@ -24,8 +24,8 @@ class AuthenticationController extends GetxController {
   @override
   void onClose() {}
 
-  signUp(email, password, name)=> FireBaseAuth.signUp(email, password, name, isRequesting, File(image.value));
-  login(email, password)=> FireBaseAuth.login(email, password, isRequesting);
+  Future<bool> signUp(email, password, name)=> FireBaseAuth.signUp(email, password, name, isRequesting, File(image.value));
+  Future<bool> login(email, password)=> FireBaseAuth.login(email, password, isRequesting);
 
 
   /// a dialog pop-up for a user to choose

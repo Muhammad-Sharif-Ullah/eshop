@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfileView extends GetView<HomeController> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,25 +28,45 @@ class ProfileView extends GetView<HomeController> {
                 SizedBox(height: 20),
                 Row(
                   children: [
-                    AvatarWiget(
-                        url: controller.user.value!.photoURL!, radius: 60),
+                    GetX(
+                      builder: (HomeController cnt) {
+                        if(cnt.user.value ==null) return Container(
+                          padding: const EdgeInsets.all(4),
+                          height: 60,
+                          width: 60,
+                            decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.greenAccent, width: 3),
+                          ),
+
+                        );
+                        return AvatarWidget(
+                            url: cnt.user.value!.photoURL!, radius: 60);
+                      },
+                    ),
                     SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-
-
-                       Text('${controller.user.value!.displayName}', style:context.textTheme.headline3
-                                ?.copyWith(letterSpacing: -.1, wordSpacing: -1) ),
-
-
-                        Text(controller.user.value!.email!,
-                            style: context.textTheme.bodyText2?.copyWith(
-                                color: Colors.grey,
-                                letterSpacing: -.1,
-                                fontWeight: FontWeight.w600))
-
+                        GetX(
+                            builder: (HomeController cnt){
+                              if(cnt.user.value == null) return Text('Loading');
+                              return Text('${cnt.user.value!.displayName}',
+                                  style: context.textTheme.headline3?.copyWith(
+                                      letterSpacing: -.1, wordSpacing: -1));
+                            }
+                        ),
+                        GetX(
+                            builder: (HomeController cnt){
+                              if(cnt.user.value == null) return Text('Loading');
+                              return Text(cnt.user.value!.email!,
+                                  style: context.textTheme.bodyText2?.copyWith(
+                                      color: Colors.grey,
+                                      letterSpacing: -.1,
+                                      fontWeight: FontWeight.w600));
+                            }
+                        ),
                       ],
                     ),
                   ],

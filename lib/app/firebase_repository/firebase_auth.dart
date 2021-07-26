@@ -16,21 +16,24 @@ class FireBaseAuth {
 
   ///Login with email and password
   ///if not exist throw errors
-  static login(String email, String pass, RxBool isRequesting) async {
+  static Future<bool> login(String email, String pass, RxBool isRequesting) async {
     isRequesting.toggle();
-    await _authInstance
+    return await _authInstance
         .signInWithEmailAndPassword(email: email, password: pass)
         .then((UserCredential value) {
       isRequesting.toggle();
       print(value.user);
+      return true;
     }).onError((FirebaseAuthException error, stackTrace) {
       print('ON ERROR');
       isRequesting.toggle();
-      errorSnackBar("Could not sing up", error.code);
+      errorSnackBar("Could not sing in", error.code);
+      return false;
     }).catchError((onError) {
       print('Catch ERROR');
       isRequesting.toggle();
-      errorSnackBar("Could not sing up", onError.toString());
+      errorSnackBar("Could not sing in", onError.toString());
+      return false;
     });
   }
 
@@ -42,22 +45,24 @@ class FireBaseAuth {
   ///           3. save image in the firebase storage
   ///       else:
   ///           show the relevant issure
-  static signUp(String email, String password, String name, RxBool isRequesting,
+  static  Future<bool> signUp(String email, String password, String name, RxBool isRequesting,
       File avatar) async {
     isRequesting.toggle();
-    await _authInstance
+    return await _authInstance
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((UserCredential value) {
           print(value.user);
       isRequesting.toggle();
       storeUserData(value.user!, name, avatar);
+      return true;
     }).onError((FirebaseAuthException error, stackTrace) {
       isRequesting.toggle();
       errorSnackBar("Could not sing up", error.code);
-
+      return false;
     }).catchError((error) {
       isRequesting.toggle();
       errorSnackBar("Could not sing up", error.toString());
+      return false;
     });
   }
 
@@ -84,7 +89,7 @@ class FireBaseAuth {
     FireBaseCollection.saveUserData(name, url, user);
 
     // Creating Beg, Orders, Favorite, Address, Reviews Collection
-    FireBaseCollection.creatingUserCollection(user.uid);
+    // FireBaseCollection.creatingUserCollection(user.uid);
 
   }
 
