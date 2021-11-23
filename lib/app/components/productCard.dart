@@ -1,9 +1,12 @@
+import 'package:eshop/app/components/favorite_button.dart';
 import 'package:eshop/app/components/ratingWidget.dart';
 import 'package:eshop/app/model/product_model.dart';
 import 'package:eshop/app/values/appColors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'cached_network_widget.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -15,9 +18,10 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int getRating() =>
-        product.rating!.fold<int>(
+        product.rating!.values.fold<int>(
             0, (previousValue, element) => (previousValue + element)) ~/
         product.rating!.length;
+    int getPeopleCount()=> product.rating!.length;
     return Container(
       width: 200,
       // height: 350,
@@ -32,12 +36,16 @@ class ProductCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // FutureImageWidget(urls: product.images!, height: 184,width: 200),
+                CachedNetworkWidget(
+                    url: product.images!.first,
+                    height: 184,
+                    width: 200),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0, top: 15, right: 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      RatingWidiget(rated: getRating()),
+                      RatingWidget(rated: getRating(), peopleCount: getPeopleCount()),
                       Text('${product.brand}',
                           overflow: TextOverflow.ellipsis,
                           style: context.textTheme.caption?.copyWith(
@@ -55,15 +63,7 @@ class ProductCard extends StatelessWidget {
             Positioned(
               top: 156,
               right: -3,
-              child: FloatingActionButton(
-                onPressed: () {},
-                heroTag: product.id,
-                child: Icon(Icons.favorite_border_sharp, color: Colors.grey),
-                backgroundColor: Get.isDarkMode
-                    ? AppColors.blackDark
-                    : AppColors.backgroundLight,
-                mini: true,
-              ),
+              child: FavoriteButton(id: product.id!),
             ),
             Positioned(
               top: 10,

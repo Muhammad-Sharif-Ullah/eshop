@@ -1,0 +1,20 @@
+{
+  "user_id": "user_Id",
+  "user_name": "user_name",
+  "product_Id": "product_id",
+  "avatar": "user image url",
+  "text": "comments",
+  "images": [
+     "images1", "images2", "images3"
+  ],
+  "rate": 4,
+  "created_at": "",
+  "reviewLiked" : {
+    "user_uid1": 4,
+    "user_uid2": 4,
+    "user_uid3": 4,
+    "user_uid4": 4
+
+  }
+}
+

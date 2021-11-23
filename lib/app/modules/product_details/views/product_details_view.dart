@@ -1,14 +1,17 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:eshop/app/components/bigSplashButton.dart';
 import 'package:eshop/app/components/cached_network_widget.dart';
+import 'package:eshop/app/components/productCard.dart';
 import 'package:eshop/app/controllers/account_service_controller.dart';
 import 'package:eshop/app/firebase_repository/firebase_collection.dart';
 import 'package:eshop/app/model/beg_model.dart';
 import 'package:eshop/app/model/product_model.dart';
 import 'package:eshop/app/modules/product_details/views/components/reviewSection.dart';
+import 'package:eshop/app/modules/product_details/views/components/write_review.dart';
 import 'package:eshop/app/values/appColors.dart';
 import 'package:eshop/app/values/appConstant.dart';
 import 'package:eshop/app/values/nab_icon_icons.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -22,11 +25,9 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
   Widget build(BuildContext context) {
     // final ProductModel product = Get.arguments;
     final ProductModel product = controller.product;
-    int getRating() =>
-        product.rating!.fold<int>(
-            0, (previousValue, element) => (previousValue + element)) ~/
-        product.rating!.length;
 
+    final AccountServiceController acsCNT =
+        Get.find<AccountServiceController>();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -49,29 +50,37 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
               alignment: Alignment.center,
               children: [
                 Icon(NabIcon.bag_nofill),
-                Positioned(
-                  right: 0,
-                  top: 10,
-                  child: Container(
-                      height: 22,
-                      width: 22,
-                      padding: const EdgeInsets.all(2),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.primary,
-                      ),
-                      child: FittedBox(
-                        fit: BoxFit.cover,
-                        child: GetX(
-                          builder: (AccountServiceController cnt){
-                            return Text(
-                              '${cnt.beg.length}',
-                              style: context.textTheme.caption,
-                            );
-                          },
-                        ),
-                      )),
+                GetX(
+                  builder: (AccountServiceController acsCNT) {
+                    return (acsCNT.beg.length != 0)
+                        ? Positioned(
+                            right: 0,
+                            top: 10,
+                            child: Container(
+                              height: 20,
+                              width: 20,
+                              padding: const EdgeInsets.all(2.4),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.primary,
+                                border: Border.all(
+                                    width: 2,
+                                    color: Get.isDarkMode
+                                        ? AppColors.blackDark
+                                        : Colors.white),
+                              ),
+                              child: FittedBox(
+                                fit: BoxFit.cover,
+                                child: Text(
+                                  '${acsCNT.beg.length}',
+                                  style: context.textTheme.caption
+                                      ?.copyWith(color: Colors.white),
+                                ),
+                              ),
+                            ))
+                        : Container();
+                  },
                 ),
               ],
             ),
@@ -105,14 +114,6 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                     height: 184,
                     width: 200,
                   );
-                  // return FutureBuilder<String>(
-                  //   builder: (BuildContext context,
-                  //       AsyncSnapshot<dynamic> snapShot) {
-                  //     if (snapShot.hasData) return Image.network(snapShot.data);
-                  //     return Center(child: Text('Loading'));
-                  //   },
-                  //   future: FireBaseStorage.getDownloadLink(image),
-                  // );
                 },
               ),
             ),
@@ -126,11 +127,10 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                   ),
                   ProductInfo(
                     brand: product.brand!,
-                    price: double.parse(product.oldPrice!),
+                    price: double.parse(product.oldPrice!), //TODO? Deside later
                     prodType: product.category!,
-                    rating: getRating(),
-                    shortInfo:
-                        "Short dress in soft cotton jersey with decorative buttons down the front and a wide, frill-trimmed",
+                    rating: product.rating!, //TODO: Testing
+                    shortInfo: product.description!,
                   ),
                 ],
               ),
@@ -145,10 +145,20 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                   await FireBaseCollection.addToBeg(
                       begMap: BegModel.productToBeg(controller.product,
                           controller.color.value, controller.size.value, 1));
+                  Get.rawSnackbar(
+                    messageText: Center(child: Text("Item added in your card")),
+                    animationDuration: Duration(milliseconds: 400),
+                    dismissDirection: SnackDismissDirection.HORIZONTAL,
+                    duration: Duration(milliseconds: 700),
+                    snackPosition: SnackPosition.TOP,
+                  );
                 },
               ),
             ),
             ReviewSection(),
+            // Expanded(
+            //   child: Container(),
+            // ),
             Divider(),
             Padding(
               padding: const EdgeInsets.all(AppConstant.kPadding),
@@ -161,46 +171,47 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                         'You may also like',
                         style: context.textTheme.headline3,
                       ),
-                      Text(
-                        '12 items',
-                        style: context.textTheme.caption,
-                      ),
+                      Obx(
+                        () => Text(
+                          '${controller.relatedProd.length} Items',
+                          style: context.textTheme.caption,
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(height: 5),
                   //TODO: Fix Product Card
-                  // Container(
-                  //   height: 300,
-                  //   child: ListView.builder(
-                  //     scrollDirection: Axis.horizontal,
-                  //     itemCount: saleProducts.length,
-                  //     itemBuilder: (context, int index) {
-                  //       return ProductCard(product: saleProducts[index]);
-                  //     },
-                  //   ),
-                  // ),
+                  Container(
+                    height: 300,
+                    child: Obx(() => ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: controller.relatedProd.length,
+                          itemBuilder: (context, int index) {
+                            return ProductCard(
+                                product: controller.relatedProd[index]);
+                          },
+                        )),
+                  ),
                 ],
               ),
             ),
+            SizedBox(height: 100),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         heroTag: 'Write Comments',
         onPressed: () {
-          Get.bottomSheet(
-            Container(
-              height: context.height * .7,
-              width: context.width,
-              decoration: BoxDecoration(
-                color: Get.isDarkMode
-                    ? AppColors.backgroundDark
-                    : AppColors.backgroundLight,
-              ),
-            ),
+          Get.to(
+            () => WriteReview(),
+            transition: Transition.downToUp,
+            duration: Duration(milliseconds: 700),
+            // curve: Curves.easeInToLinear
+            curve: Curves.fastLinearToSlowEaseIn,
+            // curve: Curves.fastOutSlowIn,
           );
         },
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.success,
         icon: Icon(Icons.edit, color: Colors.white),
         label: Text('Write a review', style: TextStyle(color: Colors.white)),
       ),

@@ -1,26 +1,36 @@
 import 'package:eshop/app/components/ratingWidget.dart';
-import 'package:eshop/app/model/model.dart';
+import 'package:eshop/app/modules/product_details/controllers/product_details_controller.dart';
 import 'package:eshop/app/values/appColors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CommentWidget extends StatelessWidget {
+class CommentWidget extends GetWidget<ProductDetailsController> {
   const CommentWidget({
     Key? key,
-    required this.reviews,
+    required this.index,
+    required this.currentUID,
   }) : super(key: key);
 
-  final ReviewsModel reviews;
+  final int index;
+  final String currentUID;
 
   @override
   Widget build(BuildContext context) {
+    Widget buildLikeIcon() {
+      return Obx(() {
+        return controller.reviewsList[index].reviewLiked!.contains(currentUID)
+            ? Icon(Icons.thumb_up_alt_sharp, color: Colors.blue)
+            : Icon(Icons.thumb_up_alt_outlined);
+      });
+    }
+
+    int getReviewsCont() => controller.reviewsList[index].reviewLiked!.length;
     return Container(
       width: context.width,
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        color: Get.isDarkMode
-            ? AppColors.blackDark
-            : AppColors.backgroundLight,
+        color: Get.isDarkMode ? AppColors.blackDark : AppColors.backgroundLight,
         elevation: 4,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -29,16 +39,22 @@ class CommentWidget extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    child: Image.asset(reviews.avatar),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(1000000),
+                      child: buildNetWorkImage(
+                          controller.reviewsList[index].avatar!),
+                    ),
                     radius: 25,
                   ),
                   SizedBox(width: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(reviews.userName),
-                      Text(reviews.date.toUtc().toString()),
-                      RatingWidiget(rated: reviews.reviewGive),
+                      Text(controller.reviewsList[index].userName!),
+                      // Text(reviews.createdAt.toString()),
+                      RatingWidget(
+                          rated: controller.reviewsList[index].rate!.toInt(),
+                          peopleCount: getReviewsCont()),
                     ],
                   ),
                 ],
@@ -48,34 +64,42 @@ class CommentWidget extends StatelessWidget {
                 children: [
                   SizedBox(width: 40),
                   Expanded(
-                    child: Text(reviews.review),
+                    child: Obx(() =>
+                        Text("\"${controller.reviewsList[index].text!}\"")),
                   )
                 ],
               ),
-              SizedBox(height: 5),
-              SizedBox(
-                height: 80,
-                child: ListView.builder(
-                  itemCount: 4,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                              'assets/images/all_images/banner3.png')),
-                    );
-                  },
+              SizedBox(height: 15),
+              if (controller.reviewsList[index].images!.length != 0)
+                SizedBox(
+                  height: 80,
+                  child: Obx(() => ListView.builder(
+                        itemCount: controller.reviewsList[index].images!.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          String url =
+                              controller.reviewsList[index].images![index];
+                          return Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: buildNetWorkImage(url)),
+                          );
+                        },
+                      )),
                 ),
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text('(${reviews.reviewLiked}) Likes'),
+                  Obx(() {
+                    return Text(
+                        '(${controller.reviewsList[index].reviewLiked!.length}) Likes');
+                  }),
                   IconButton(
-                    icon: Icon(Icons.thumb_up_alt_outlined),
-                    onPressed: () {},
+                    icon: buildLikeIcon(),
+                    onPressed: () => controller.likeAComment(
+                        controller.reviewsList[index].userId!,
+                        controller.reviewsList[index].productId!),
                   ),
                 ],
               ),
@@ -83,6 +107,27 @@ class CommentWidget extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Image buildNetWorkImage(String url) {
+    return Image.network(
+      url,
+      errorBuilder:
+          (BuildContext context, Object exception, StackTrace? stackTrace) {
+        return Center(
+          child: Icon(Icons.error, color: Colors.redAccent),
+        );
+      },
+      loadingBuilder: (BuildContext context, Widget child,
+          ImageChunkEvent? loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        }
+        return Center(
+          child: CupertinoActivityIndicator(),
+        );
+      },
     );
   }
 }

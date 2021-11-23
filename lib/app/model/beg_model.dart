@@ -37,7 +37,7 @@ class BegModel {
   String? get color => _color;
   String? get size => _size;
   String? get price => _price;
-  set setPrice(String value)=> _price = value;
+  set setPrice(String value) => _price = value;
   // Added_at? get addedAt => _addedAt;
 
   BegModel({
@@ -53,7 +53,7 @@ class BegModel {
     String? size,
     String? price,
     // Added_at? addedAt
-  }){
+  }) {
     _id = id;
     _name = name;
     _brand = brand;
@@ -101,11 +101,13 @@ class BegModel {
     // }
     return map;
   }
-  static Map<String, dynamic> productToBeg(ProductModel product, String color, String size, int quantity){
+
+  static Map<String, dynamic> productToBeg(
+      ProductModel product, String color, String size, int quantity) {
     DateTime currentPhoneDate = DateTime.now(); //DateTime
     Timestamp currentTimeStamp = Timestamp.fromDate(currentPhoneDate);
     print(currentTimeStamp);
-    final Map<String,dynamic> beg = {
+    final Map<String, dynamic> beg = {
       "id": product.id,
       "name": product.name,
       "brand": product.brand,
@@ -116,74 +118,9 @@ class BegModel {
       "discount": product.discount,
       "quantity": quantity,
       "added_at": currentTimeStamp,
-      "image" : product.images![0],
-      "price" : product.oldPrice,// TODO: Decide it later
+      "image": product.images![0],
+      "price": product.oldPrice, // TODO: Decide it later
     };
     return beg;
   }
-
 }
-
-/// __datatype__ : "timestamp"
-/// value : {"_seconds":1626717600,"_nanoseconds":0}
-//
-// class Added_at {
-//   String? _datatype;
-//   SecAndNanoSec? _value;
-//
-//   String? get datatype => _datatype;
-//   SecAndNanoSec? get value => _value;
-//
-//   Added_at({
-//     String? datatype,
-//     SecAndNanoSec? value}){
-//     _datatype = datatype;
-//     _value = value;
-//   }
-//
-//   Added_at.fromJson(dynamic json) {
-//     _datatype = json["__datatype__"];
-//     _value = json["value"] != null ? SecAndNanoSec.fromJson(json["value"]) : null;
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     var map = <String, dynamic>{};
-//     map["__datatype__"] = _datatype;
-//     if (_value != null) {
-//       map["value"] = _value?.toJson();
-//     }
-//     return map;
-//   }
-//
-// }
-
-/// _seconds : 1626717600
-/// _nanoseconds : 0
-
-// class SecAndNanoSec {
-//   int? _seconds;
-//   int? _nanoseconds;
-//
-//   int? get seconds => _seconds;
-//   int? get nanoseconds => _nanoseconds;
-//
-//   SecAndNanoSec({
-//     int? seconds,
-//     int? nanoseconds}){
-//     _seconds = seconds;
-//     _nanoseconds = nanoseconds;
-//   }
-//
-//   SecAndNanoSec.fromJson(dynamic json) {
-//     _seconds = json["_seconds"];
-//     _nanoseconds = json["_nanoseconds"];
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     var map = <String, dynamic>{};
-//     map["_seconds"] = _seconds;
-//     map["_nanoseconds"] = _nanoseconds;
-//     return map;
-//   }
-//
-// }

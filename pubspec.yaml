@@ -2,10 +2,10 @@ name: eshop
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
-environment: 
-  sdk: '>=2.12.0 <3.0.0'
+environment:
+  sdk: ">=2.12.0 <3.0.0"
 
-dependencies: 
+dependencies:
   cupertino_icons: ^1.0.2
   carousel_slider: ^4.0.0
   cloud_firestore: ^2.4.0
@@ -16,30 +16,32 @@ dependencies:
   get: 4.1.4
   firebase_auth: ^3.0.1
   json_annotation:
-  flutter: 
+  firebase_messaging: ^10.0.4
+  flutter_local_notifications: ^6.1.0
+  flutter_credit_card: ^2.0.0
+  flutter:
     sdk: flutter
 
-dev_dependencies: 
-  flutter_test: 
+dev_dependencies:
+  flutter_test:
     sdk: flutter
   build_runner:
   json_serializable:
 
-flutter: 
-  assets: 
+flutter:
+  assets:
     - assets/fonts/
     - assets/images/
     - assets/images/all_images/
-  fonts: 
+  fonts:
     - family: Metropolis
-      fonts: 
+      fonts:
         - asset: assets/fonts/metropolis/Metropolis-Bold.otf
         - asset: assets/fonts/metropolis/Metropolis-Regular.otf
         - asset: assets/fonts/metropolis/Metropolis-Medium.otf
         - asset: assets/fonts/metropolis/Metropolis-SemiBold.otf
         - asset: assets/fonts/metropolis/Metropolis-SemiBold.otf
     - family: NabIcon
-      fonts: 
+      fonts:
         - asset: assets/fonts/NabIcon.ttf
   uses-material-design: true
-

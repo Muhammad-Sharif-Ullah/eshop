@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class RatingWidiget extends StatelessWidget {
-  const RatingWidiget( {Key? key, required this.rated}) : super(key: key);
+class RatingWidget extends StatelessWidget {
+  const RatingWidget( {Key? key, required this.rated, required this.peopleCount}) : super(key: key);
   final int rated;
-
+  final int peopleCount;
   @override
   Widget build(BuildContext context) {
     final String rate = "★";
@@ -16,7 +16,8 @@ class RatingWidiget extends StatelessWidget {
               text: '${rate * rated}',
               style: TextStyle(color: Color(0xFFFFBA49), fontSize: 16)),
           TextSpan(text: '${notRated * (5 - rated)}'),
-          // TextSpan(text: '(10)'),
+          if(peopleCount!=0)
+          TextSpan(text: ' ($peopleCount)'),
         ],
       ),
     );

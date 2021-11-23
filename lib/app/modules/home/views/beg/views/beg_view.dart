@@ -1,8 +1,9 @@
 import 'package:eshop/app/components/bigSplashButton.dart';
 import 'package:eshop/app/controllers/account_service_controller.dart';
-import 'package:eshop/app/firebase_repository/firebase_collection.dart';
+import 'package:eshop/app/model/beg_mdoel_f.dart';
 import 'package:eshop/app/model/beg_model.dart';
-import 'package:eshop/app/routes/app_pages.dart';
+import 'package:eshop/app/modules/home/views/beg/views/checkout_view.dart';
+import 'package:eshop/app/modules/home/views/beg/views/components/bag_card_F.dart';
 import 'package:eshop/app/values/appColors.dart';
 import 'package:eshop/app/values/appConstant.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'components/bagCard.dart';
+import 'components/bag_card_t.dart';
+import 'components/beg_card_m.dart';
+// import 'components/bag_card_FF.dart';
 
 class BegView extends GetView<AccountServiceController> {
   const BegView({
@@ -18,7 +22,7 @@ class BegView extends GetView<AccountServiceController> {
 
   @override
   Widget build(BuildContext context) {
-    // final begCNT = Get
+    controller.getTotalPrice();
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -48,16 +52,25 @@ class BegView extends GetView<AccountServiceController> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: AppConstant.kPadding),
-                child: Obx((){
-                  controller.total.value = controller.getTotalPrice();
-                  return ListView.builder(
-                        itemCount: controller.beg.length,
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (context, int index) {
-                          return BegCard(beg: controller.beg[index], index: index);
-                        });
-                }
-                ),
+                // child: StreamBuilder<List<BegModel>>(
+                //     stream: controller.getBegAsStream(),
+                //     builder: (context, snapshot) {
+                //       if (snapshot.hasData) {
+                //         if (snapshot.data!.isEmpty)
+                //           return Center(child: Text('No product in your beg'));
+                //         else {
+                //           return ListView.builder(
+                //               itemCount: controller.beg.length,
+                //               physics: BouncingScrollPhysics(),
+                //               itemBuilder: (context, int index) {
+                //                 return BegCard(
+                //                     beg: controller.beg[index], index: index);
+                //               });
+                //         }
+                //       }
+                //       return Center(child: Text('Loading'));
+                //     }),
+                child: buildObx(context),
                 // child: StreamBuilder<List<BegModel>>(
                 //     stream: controller.getBegItems(),
                 //     builder: (context, snapshot) {
@@ -88,41 +101,8 @@ class BegView extends GetView<AccountServiceController> {
               ),
             ),
 
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: AppConstant.kPadding),
-              child: Divider(
-                thickness: 3,
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: AppConstant.kPadding),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Total Amount', style: context.textTheme.subtitle2),
-                  Obx(() => Text(
-                        '${controller.total.value.toPrecision(2)}\$',
-                        style: context.textTheme.headline3,
-                      )),
-                ],
-              ),
-            ),
-            SizedBox(height: 24),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: AppConstant.kPadding),
-              child: BigSplashButton(
-                  height: 48,
-                  width: context.width,
-                  text: "CHECK OUT",
-                  onPressed: () {
-                   // controller.getTotalPrice();
-                    print(controller.favoritesId);
-                  }),
-            ),
-            SizedBox(height: 14),
+            ///TODO: change the gui
+            ...totalListWidget(context),
             // Padding(
             //   padding: const EdgeInsets.symmetric(
             //       horizontal: AppConstant.kPadding),
@@ -177,5 +157,70 @@ class BegView extends GetView<AccountServiceController> {
         ),
       ),
     );
+  }
+
+  Obx buildObx(BuildContext context) {
+    return Obx(() {
+      // controller.total.value = controller.getTotalPrice();
+      if (controller.beg.isEmpty)
+        return Center(
+            child: Text(
+          'You have no Item in your beg',
+          style: context.textTheme.caption,
+        ));
+      return ListView.builder(
+          itemCount: controller.beg.length,
+          physics: BouncingScrollPhysics(),
+          itemBuilder: (context, int index) {
+            final Rx<BegModel> item = controller.beg[index].obs;
+            // return BegCardFF(index: index, beg: item);
+            return BegCardM(
+                index: index, pID: controller.beg[index].id!, beg: item);
+            // return BegCard(index: index, beg: controller.beg[index]);
+          });
+    });
+  }
+
+  List<Widget> totalListWidget(BuildContext context) {
+    return [
+      Obx(() => controller.total.value == 0.0
+          ? Container()
+          : Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: AppConstant.kPadding),
+              child: Divider(
+                thickness: 3,
+              ),
+            )),
+      Obx(() => controller.total.value == 0.0
+          ? Container()
+          : Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: AppConstant.kPadding),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Total Amount', style: context.textTheme.subtitle2),
+                  Obx(() => Text(
+                        '${controller.total.value.toPrecision(2)}\$',
+                        style: context.textTheme.headline3,
+                      )),
+                ],
+              ),
+            )),
+      SizedBox(height: 24),
+      Obx(() => controller.total.value == 0.0
+          ? Container()
+          : Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: AppConstant.kPadding),
+              child: BigSplashButton(
+                  height: 48,
+                  width: context.width,
+                  text: "CHECK OUT",
+                  onPressed: () => Get.to(() => CheckoutView())),
+            )),
+      SizedBox(height: 14)
+    ];
   }
 }

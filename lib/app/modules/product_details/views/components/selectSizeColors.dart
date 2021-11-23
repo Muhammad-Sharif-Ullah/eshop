@@ -1,3 +1,4 @@
+import 'package:eshop/app/components/favorite_button.dart';
 import 'package:eshop/app/firebase_repository/firebase_collection.dart';
 import 'package:eshop/app/modules/product_details/controllers/product_details_controller.dart';
 import 'package:eshop/app/values/appColors.dart';
@@ -25,17 +26,7 @@ class SelectSizeColor extends GetWidget<ProductDetailsController> {
         buildOutlinedButton('Color', Icons.keyboard_arrow_down, () {
           buildBottomSheet(context, colors, "Select Colors", controller.color);
         }),
-        FloatingActionButton(
-          onPressed: (){
-            FireBaseCollection.addToMyFavorites(controller.product.id!);
-          },
-          heroTag: 'Favorites',
-          child: Icon(Icons.favorite_border_sharp, color: Colors.grey),
-          elevation: 6,
-          mini: true,
-          backgroundColor:
-              !Get.isDarkMode ? AppColors.backgroundLight : AppColors.blackDark,
-        ),
+        FavoriteButton(id: controller.product.id!),
       ],
     );
   }

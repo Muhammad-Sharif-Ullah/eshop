@@ -15,12 +15,16 @@ class ProductInfo extends StatelessWidget {
   final String prodType;
   final String shortInfo;
   final double price;
-  final int rating;
+  final Map<String, int> rating;
 
   @override
   Widget build(BuildContext context) {
-
-
+    int getRating() {
+      if(rating.length== 0) return 0;
+      return rating.values.fold<int>(
+            0, (previousValue, element) => (previousValue + element)) ~/
+            rating.length;
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +53,7 @@ class ProductInfo extends StatelessWidget {
             ),
           ],
         ),
-        RatingWidiget(rated: rating),
+        RatingWidget(rated: getRating(), peopleCount: rating.length),
         SizedBox(height: 20),
         Text(shortInfo),
         SizedBox(height: 20),

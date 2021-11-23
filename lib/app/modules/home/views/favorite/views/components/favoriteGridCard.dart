@@ -4,7 +4,6 @@ import 'package:eshop/app/values/nab_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:eshop/app/model/model.dart';
 import 'package:eshop/app/values/appColors.dart';
 
 

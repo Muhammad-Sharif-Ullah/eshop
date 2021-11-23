@@ -1,4 +1,5 @@
 import 'package:eshop/app/components/cached_network_widget.dart';
+import 'package:eshop/app/components/favorite_button.dart';
 import 'package:eshop/app/components/ratingWidget.dart';
 import 'package:eshop/app/controllers/account_service_controller.dart';
 import 'package:eshop/app/firebase_repository/firebase_collection.dart';
@@ -17,10 +18,15 @@ class ProductCard extends GetWidget<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    int getRating() =>
-        controller.products[index].rating!.fold<int>(
+    int getPeopleCount()=> controller.products[index].rating!.length;
+
+    int getRating() {
+      if(getPeopleCount() == 0) return 0;
+      return controller.products[index].rating!.values.fold<int>(
             0, (previousValue, element) => (previousValue + element)) ~/
         controller.products[index].rating!.length;
+    }
+    final String id = controller.products[index].id!;
     return Container(
       width: 200,
       // height: 350,
@@ -43,14 +49,13 @@ class ProductCard extends GetWidget<HomeController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      RatingWidiget(rated: getRating()),
+                      RatingWidget(rated: getRating(), peopleCount: getPeopleCount()),
                       Text(controller.products[index].brand!,
                           //'${product.brand}'
                           overflow: TextOverflow.ellipsis,
                           style: context.textTheme.caption?.copyWith(
                               color: Colors.grey, letterSpacing: -.3)),
                       Text(controller.products[index].name!,
-
                           overflow: TextOverflow.ellipsis,
                           style: context.textTheme.subtitle1
                               ?.copyWith(letterSpacing: -.5)),
@@ -66,27 +71,7 @@ class ProductCard extends GetWidget<HomeController> {
             Positioned(
               top: 156,
               right: -3,
-              child: FloatingActionButton(
-                onPressed: () {
-                  FireBaseCollection.addToMyFavorites(
-                      controller.products[index].id!);
-                },
-                heroTag: controller.products[index].id,
-                child: GetX(
-                  builder: (AccountServiceController acsCNT) {
-                    Icon icon = acsCNT.favoritesId
-                            .contains(controller.products[index].id)
-                        ? Icon(Icons.favorite, color: AppColors.primary)
-                        : Icon(Icons.favorite_outline_outlined,
-                            color: AppColors.grey);
-                    return icon;///TODO: add Delete option
-                  },
-                ),
-                backgroundColor: Get.isDarkMode
-                    ? AppColors.blackDark
-                    : AppColors.backgroundLight,
-                mini: true,
-              ),
+              child: FavoriteButton(id: id),
             ),
             Positioned(
               top: 10,
@@ -113,6 +98,7 @@ class ProductCard extends GetWidget<HomeController> {
     );
   }
 }
+
 
 class PriceText extends StatelessWidget {
   const PriceText({

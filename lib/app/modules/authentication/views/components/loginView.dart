@@ -24,7 +24,7 @@ class LoginView extends GetWidget<AuthenticationController> {
     return WillPopScope(
       onWillPop: () async {
         controller.visibility.value = true;
-        return  true;
+        return true;
       },
       child: SafeArea(
         child: Scaffold(
@@ -48,7 +48,8 @@ class LoginView extends GetWidget<AuthenticationController> {
                         InputBoxWidget(
                           child: TextInputField(
                             controller: _email,
-                            validator: (value) => Validator.emailValidate(value),
+                            validator: (value) =>
+                                Validator.emailValidate(value),
                             label: "Email",
                             hintText: "your@email.com",
                             inputType: TextInputType.emailAddress,
@@ -121,8 +122,9 @@ class LoginView extends GetWidget<AuthenticationController> {
             text: "Login",
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                final result = await controller.login(_email.text.trim(), _password.text.trim());
-                if(result){
+                final result = await controller.login(
+                    _email.text.trim(), _password.text.trim());
+                if (result) {
                   Get.offAllNamed(Routes.HOME);
                   print("Successfully login");
                 }

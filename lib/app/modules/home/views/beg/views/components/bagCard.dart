@@ -1,11 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eshop/app/components/cached_network_widget.dart';
-import 'package:eshop/app/components/futureImageWidget.dart';
 import 'package:eshop/app/controllers/account_service_controller.dart';
 import 'package:eshop/app/firebase_repository/firebase_collection.dart';
 import 'package:eshop/app/model/beg_model.dart';
-import 'package:eshop/app/model/product_model.dart';
 import 'package:eshop/app/values/appColors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +22,8 @@ class BegCard extends StatefulWidget {
 }
 
 class _BegCardState extends State<BegCard> {
-  RxDouble price = 0.0.obs;
-  RxInt quantity = 1.obs;
+  RxDouble originalProdPrice = 0.0.obs;
+  RxInt originalProdQuantity = 1.obs;
   RxInt vQuantity = 1.obs;
   RxDouble vPrice = 0.0.obs;
   late String prodId;
@@ -36,9 +32,9 @@ class _BegCardState extends State<BegCard> {
   @override
   void initState() {
     prodId = widget.beg.id!;
-    price.bindStream(priceAsStream(prodId));
-    quantity.bindStream(quantityAsStream(prodId));
-    // vQuantity.value = quantity.value;
+    originalProdPrice.bindStream(priceAsStream(prodId));
+    originalProdQuantity.bindStream(quantityAsStream(prodId));
+    vQuantity.value = widget.beg.quantity!;
 
     super.initState();
   }
@@ -62,20 +58,6 @@ class _BegCardState extends State<BegCard> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              // Expanded(
-              //   flex: 1,
-              //   child: FutureImageWidget(
-              //     height: 130,
-              //     url: widget.beg.image!,
-              //     width: 200,
-              //   ),
-              // ),
-              // Image.asset(
-              //   "assets/images/all_images/bag1.png",
-              //   height: 130,
-              //   fit: BoxFit.cover,
-              //   filterQuality: FilterQuality.high,
-              // )
               Expanded(
                 flex: 1,
                 child: CachedNetworkWidget(
@@ -96,27 +78,28 @@ class _BegCardState extends State<BegCard> {
                       style: context.textTheme.subtitle1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Text.rich(
-                      TextSpan(
-                          text: 'Color: ',
-                          style: context.textTheme.bodyText1
-                              ?.copyWith(color: Colors.grey, fontSize: 13),
-                          children: [
-                            TextSpan(
-                              text: widget.beg.color,
-                              style: context.textTheme.bodyText1,
-                            ),
-                            TextSpan(
+                    Obx(() => Text.rich(
+                          TextSpan(
+                              text: 'Color: ',
                               style: context.textTheme.bodyText1
-                                  ?.copyWith(color: Colors.grey),
-                              text: "  Size: ",
-                            ),
-                            TextSpan(
-                              style: context.textTheme.bodyText1,
-                              text: widget.beg.size,
-                            ),
-                          ]),
-                    ),
+                                  ?.copyWith(color: Colors.grey, fontSize: 13),
+                              children: [
+                                TextSpan(
+                                  // text: widget.beg.color,
+                                  text: originalProdQuantity.value.toString(),
+                                  style: context.textTheme.bodyText1,
+                                ),
+                                TextSpan(
+                                  style: context.textTheme.bodyText1
+                                      ?.copyWith(color: Colors.grey),
+                                  text: "  Size: ",
+                                ),
+                                TextSpan(
+                                  style: context.textTheme.bodyText1,
+                                  text: widget.beg.size,
+                                ),
+                              ]),
+                        )),
                     SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,20 +108,26 @@ class _BegCardState extends State<BegCard> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             FloatingActionButton(
-                              onPressed: () {
+                              heroTag: "Remove $prodId",
+                              onPressed: () async {
+                                print(widget.beg.name);
                                 if (vQuantity.value > 1) {
                                   vQuantity.value--;
-                                  // controller.beg[widget.index].setPrice = "${vQuantity.value * price.value}";
-                                  // controller.getTotalPrice();
-                                  controller.total.value -=
-                                      (price.value * vQuantity.value);
+                                  vPrice.value =
+                                      originalProdPrice.value * vQuantity.value;
+                                  await FireBaseCollection.changeQuantity(
+                                      vQuantity.value,
+                                      prodId,
+                                      "${vPrice.value}");
+                                  controller.getTotalPrice();
                                 }
                               },
                               child: Icon(Icons.remove, color: getColor()),
                               mini: true,
                             ),
                             SizedBox(width: 10),
-                            Obx(() => Text("${vQuantity.value}")),
+                            Obx(() => Text(
+                                "${controller.beg[widget.index].quantity}")),
                             // StreamBuilder<int>(
                             //     stream: quantityAsStream(prodId),
                             //     builder: (context, snapshot) {
@@ -151,13 +140,21 @@ class _BegCardState extends State<BegCard> {
                             //     }),
                             SizedBox(width: 10),
                             FloatingActionButton(
-                                onPressed: () {
-                                  if (vQuantity.value < quantity.value) {
+                                heroTag: "Add $prodId",
+                                onPressed: () async {
+                                  print(widget.beg.name);
+                                  print(originalProdQuantity.value);
+                                  if (vQuantity.value <
+                                      originalProdQuantity.value) {
                                     vQuantity.value++;
-                                    // controller.beg[widget.index].setPrice = "${vQuantity.value * price.value}";
-                                    // controller.getTotalPrice();
-                                    controller.total.value +=
-                                        (price.value * (vQuantity.value - 1));
+                                    vPrice.value = originalProdPrice.value *
+                                        vQuantity.value;
+                                    await FireBaseCollection.changeQuantity(
+                                        vQuantity.value,
+                                        prodId,
+                                        "${vPrice.value}");
+                                    // widget.beg.setPrice(); setPrice(vPrice.value.toString());
+                                    controller.getTotalPrice();
                                   } else
                                     Get.rawSnackbar(
                                         message: 'You have reached max item',
@@ -180,11 +177,14 @@ class _BegCardState extends State<BegCard> {
                         // ),
                         GetX(
                           builder: (AccountServiceController cnt) {
-                            vPrice.value = price.value * vQuantity.value;
+                            vPrice.value =
+                                originalProdPrice.value * vQuantity.value;
                             return Padding(
                               padding: const EdgeInsets.only(right: 14.0),
                               child: Text(
-                                '${vPrice.value.toPrecision(2)}\$',
+                                // '${vPrice.value.toPrecision(2)}\$',
+                                // '${controller.beg[widget.index].price}\$',
+                                '${widget.beg.price}\$',
                                 style: context.textTheme.subtitle1
                                     ?.copyWith(fontWeight: FontWeight.w600),
                               ),
@@ -214,9 +214,11 @@ class _BegCardState extends State<BegCard> {
           top: 6,
           child: InkWell(
             child: Icon(Icons.close, color: Colors.red),
-            onTap: () {
-              controller.total.value -= vPrice.value;
-              return controller.deleteItemFromBeg(widget.beg.id!);
+            onTap: () async {
+              controller.total.value -=
+                  double.parse(controller.beg[widget.index].price!);
+              await controller.deleteItemFromBeg(widget.beg.id!);
+              Get.forceAppUpdate();
             },
           ),
         ),
@@ -248,4 +250,3 @@ class _BegCardState extends State<BegCard> {
     });
   }
 }
-

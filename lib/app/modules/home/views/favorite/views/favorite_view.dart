@@ -125,12 +125,16 @@ class FavoriteView extends GetView<AccountServiceController> {
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');
-          }
-          else if (snapshot.connectionState == ConnectionState.waiting) {
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
             return Text("Loading");
           }
           final List<ProductModel?> favoriteList = snapshot.data;
-
+          if (favoriteList.isEmpty)
+            return Center(
+                child: Text(
+              'You have no Item in your favorite list',
+              style: context.textTheme.caption,
+            ));
           return GridView.builder(
               physics: BouncingScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -142,21 +146,29 @@ class FavoriteView extends GetView<AccountServiceController> {
         });
   }
 
-  // return GridView.builder(
-  // physics: BouncingScrollPhysics(),
-  // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-  // crossAxisCount: 2, mainAxisExtent: 300, mainAxisSpacing: 10),
-  // itemCount: 20,
-  // itemBuilder: (context, index) {
-  // return FavoriteGridCard(product: saleProducts[0]);
-  // });
-
-  ListView _buildListView() {
-    return ListView.builder(
-        itemCount: 10,
-        physics: BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          return FavoriteListCard();
-        });
+  Widget _buildListView() {
+    return FutureBuilder<List<ProductModel?>>(
+      future: controller.favoritesList(),
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+        final List<ProductModel?> favoriteList = snapshot.data;
+        if (favoriteList.isEmpty)
+          return Center(
+              child: Text(
+            'You have no Item in your favorite list',
+            style: context.textTheme.caption,
+          ));
+        return ListView.builder(
+            itemCount: favoriteList.length,
+            physics: BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              return FavoriteListCard(product: favoriteList[index]!);
+            });
+      },
+    );
   }
 }

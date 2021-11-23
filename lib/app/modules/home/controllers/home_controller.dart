@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eshop/app/firebase_repository/firebase_storage.dart';
+import 'package:eshop/app/model/display_model.dart';
 import 'package:eshop/app/model/product_model.dart';
 import 'package:eshop/app/modules/home/views/beg/views/beg_view.dart';
 import 'package:eshop/app/modules/home/views/category/views/category_view.dart';
@@ -18,6 +19,7 @@ class HomeController extends GetxController {
   final FirebaseFirestore fireStore = FirebaseFirestore.instance;
   Rx<User?> user = FirebaseAuth.instance.currentUser.obs;
   RxList<ProductModel> products = RxList<ProductModel>([]);
+  RxList<DisplayProduct> displayProucts = RxList<DisplayProduct>([]);
   final List<StatelessWidget> allPages = [
     HomeBody(),
     CategoryView(),
@@ -32,7 +34,7 @@ class HomeController extends GetxController {
   onInit() {
     user.bindStream(instance.userChanges());
     products.bindStream(getProductData());
-
+    // fetchtDisplayProducts();
     super.onInit();
   }
 
@@ -49,15 +51,26 @@ class HomeController extends GetxController {
   RxInt getPageID() => pageIndex;
 
   Stream<List<ProductModel>> getProductData() {
-      return fireStore.collection('products').snapshots().map((query) {
-        return query.docs.map((product) {
-         return ProductModel.fromJson(product.data());
-        }).toList();
-      });
+    return fireStore.collection('products').snapshots().map((query) {
+      return query.docs.map((product) {
+        return ProductModel.fromJson(product.data());
+      }).toList();
+    });
   }
 
+  Future<String> getDownloadLink(String url) =>
+      FireBaseStorage.getDownloadLink(url);
 
-  Future<String> getDownloadLink(String url) => FireBaseStorage.getDownloadLink(url);
+  Future<List<DisplayProduct>> fetchtDisplayProducts() async {
+    final List<DisplayProduct> prod = [];
+    return await fireStore.collection('display_products').get().then((dPID) {
+      dPID.docs.forEach((element) {
+        final DisplayProduct item = DisplayProduct.fromJson(element.data());
+        prod.add(item);
+      });
+      return prod;
+    });
+  }
   // addToMyBeg(ProductModel product)async{
   //
   //   await FireBaseCollection.addToBeg(

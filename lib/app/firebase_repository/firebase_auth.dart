@@ -16,7 +16,8 @@ class FireBaseAuth {
 
   ///Login with email and password
   ///if not exist throw errors
-  static Future<bool> login(String email, String pass, RxBool isRequesting) async {
+  static Future<bool> login(
+      String email, String pass, RxBool isRequesting) async {
     isRequesting.toggle();
     return await _authInstance
         .signInWithEmailAndPassword(email: email, password: pass)
@@ -45,13 +46,13 @@ class FireBaseAuth {
   ///           3. save image in the firebase storage
   ///       else:
   ///           show the relevant issure
-  static  Future<bool> signUp(String email, String password, String name, RxBool isRequesting,
-      File avatar) async {
+  static Future<bool> signUp(String email, String password, String name,
+      RxBool isRequesting, File avatar) async {
     isRequesting.toggle();
     return await _authInstance
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((UserCredential value) {
-          print(value.user);
+      print(value.user);
       isRequesting.toggle();
       storeUserData(value.user!, name, avatar);
       return true;
@@ -90,7 +91,6 @@ class FireBaseAuth {
 
     // Creating Beg, Orders, Favorite, Address, Reviews Collection
     // FireBaseCollection.creatingUserCollection(user.uid);
-
   }
 
   /// Return True if use is loged in
@@ -116,6 +116,12 @@ class FireBaseAuth {
     return _authInstance.currentUser;
   }
 
+  static Future<Map<String, dynamic>> resetPassword(String email) async {
+    return _authInstance.sendPasswordResetEmail(email: email).then((value) {
+      return <String, dynamic>{"status": true, "message": "success"};
+    }).onError((FirebaseAuthException error, stackTrace) =>
+        <String, dynamic>{'status': false, "message": error.code.toString()});
+  }
 
   FireBaseAuth();
 }

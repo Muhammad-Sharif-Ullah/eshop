@@ -24,7 +24,7 @@ class ProductModel {
   TimeConversion? _createdAt;
   List<String>? _sizes;
   String? _measurement;
-  List<int>? _rating;
+  Map<String, int>? _rating;
   String? _name;
   int? _discount;
   TimeConversion? _lastUpdate;
@@ -50,7 +50,7 @@ class ProductModel {
 
   String? get measurement => _measurement;
 
-  List<int>? get rating => _rating;
+  Map<String, int>? get rating => _rating;
 
   String? get name => _name;
 
@@ -79,7 +79,7 @@ class ProductModel {
       List<String>? colors,
       TimeConversion? createdAt,
       List<String>? sizes,
-      List<int>? rating,
+      Map<String, int>? rating,
       String? measurement,
       String? name,
       int? discount,
@@ -123,7 +123,7 @@ class ProductModel {
     _measurement = json["measurement"];
     _name = json["name"];
     _discount = json["discount"];
-    _rating = json["rating"] != null ? json["rating"].cast<int>() : [];
+    _rating = json["rating"] != null ? json["rating"].cast<String, int>() : <String,int>{};
     _lastUpdate = json["TimeConvertion"] != null
         ? TimeConversion.fromJson(json["lastUpdate"])
         : null;
